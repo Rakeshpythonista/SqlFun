@@ -1,0 +1,272 @@
+PL/SQL - Constants, Commenting and Variable scope
+---------------------------------------------
+Commenting..
+Example 1:
+SET SERVEROUTPUT ON;
+declare
+    v_text varchar2(20) := 'SQL Easy to Learn';
+BEGIN
+    ---This is single line comment
+    DBMS_OUTPUT.PUT_LINE(v_text);
+END;
+
+o/p - SQL Easy to Learn
+
+Example 2:
+SET SERVEROUTPUT ON;
+declare
+    v_text varchar2(20) := 'SQL Easy to Learn';
+BEGIN
+    ---This is single line comment
+    /*This is a
+    multiple line
+    comment*/
+    DBMS_OUTPUT.PUT_LINE(v_text);
+END;
+
+o/p - SQL Easy to Learn
+------------------------------------
+PL/SQL - Constants
+A constant is declared using the CONSTANT keyword. It requires an initial value and does not allow that value to be changed. For example −
+SET SERVEROUTPUT ON;
+DECLARE 
+   -- constant declaration 
+   pi constant number := 3.141592654; 
+   -- other declarations 
+   radius number(5,2);  
+   dia number(5,2);  
+   circumference number(7, 2); 
+   area number (10, 2); 
+BEGIN  
+   -- processing 
+   radius := 9.5;  
+   dia := radius * 2;  
+   circumference := 2.0 * pi * radius; 
+   area := pi * radius * radius; 
+   -- output 
+   dbms_output.put_line('Radius: ' || radius); 
+   dbms_output.put_line('Diameter: ' || dia); 
+   dbms_output.put_line('Circumference: ' || circumference); 
+   dbms_output.put_line('Area: ' || area); 
+END; 
+
+O/P - 
+Radius: 9.5 
+Diameter: 19 
+Circumference: 59.69 
+Area: 283.53 
+------------------------------------------
+The PL/SQL Literals
+A literal is an explicit numeric, character, string, or Boolean value not represented by an identifier. For example, TRUE, 786, NULL, 'tutorialspoint' are all literals of type Boolean, number, or string. PL/SQL, literals are case-sensitive. PL/SQL supports the following kinds of literals −
+
+Numeric Literals - 050 78 -14 0 +32767
+Character Literals - 'A' '%' '9' ' ' 'z' '('
+String Literals - 'Hello, world!'
+BOOLEAN Literals -TRUE, FALSE, and NULL.
+Date and Time Literals - DATE '1978-12-25'; & TIMESTAMP '2012-10-29 12:01:01';
+
+Example -
+DECLARE 
+   message  varchar2(30):= 'That''s tutorialspoint.com!'; 
+BEGIN 
+   dbms_output.put_line(message); 
+END; 
+
+o/p - That's tutorialspoint.com!
+
+Example:
+DECLARE
+	sV_TEXT VARCHAR2(10):= 'PL/SQL';
+BEGIN
+--This is a single line comment
+/* This is a 
+    multi line
+    comment */
+--DBMS_OUTPUT.PUT_LINE(V_TEXT || ' is a good language');
+null;
+END;
+
+o/p - PL/SQL procedure successfully completed.
+---------------------------------------------
+Variable Scope in PL/SQL
+PL/SQL allows the nesting of blocks, i.e., each program block may contain another inner block. If a variable is declared within an inner block, it is not accessible to the outer block. However, if a variable is declared and accessible to an outer block, it is also accessible to all nested inner blocks. There are two types of variable scope −
+
+Local variables − Variables declared in an inner block and not accessible to outer blocks.
+
+Global variables − Variables declared in the outermost block or a package.
+
+Example1:
+DECLARE
+    --Global variables
+    num1 number := 95;
+    num2 number := 85;
+BEGIN
+    dbms_output.put_line('Outer Variable num1 : '|| num1); 
+    dbms_output.put_line('Outer Variable num2 : '|| num2);
+    DECLARE
+        --Local Variables
+        num1 number := 195;
+        num2 number := 185;
+    BEGIN
+        dbms_output.put_line('Inner Variable num1 : '|| num1); 
+        dbms_output.put_line('Inner Variable num2 : '|| num2);
+    END;
+END;
+
+o/p - 
+Outer Variable num1 : 95
+Outer Variable num2 : 85
+Inner Variable num1 : 195
+Inner Variable num2 : 185
+
+Example2:
+DECLARE
+    --Global variables
+    v_outer VARCHAR2(50) := 'RAKESH DAS';
+BEGIN
+    dbms_output.put_line('Outer Variable is : '|| v_outer); 
+    DECLARE
+        --Local Variables
+        v_inner VARCHAR2(50) := 'PARESH DAS';
+    BEGIN
+        dbms_output.put_line('Outer Variable is : '|| v_outer); 
+        dbms_output.put_line('Inner Variable is : '|| v_inner);
+    END;
+END;
+
+o/p- 
+Outer Variable is : RAKESH DAS
+Outer Variable is : RAKESH DAS
+Inner Variable is : PARESH DAS
+
+Example3:
+DECLARE
+    --Global variables
+    v_outer VARCHAR2(50) := 'RAKESH DAS';
+BEGIN
+    dbms_output.put_line('Outer Variable is : '|| v_outer); 
+    DECLARE
+        --Local Variables
+        v_inner VARCHAR2(50) := 'PARESH DAS';
+    BEGIN
+        dbms_output.put_line('Outer Variable is : '|| v_outer); 
+        dbms_output.put_line('Inner Variable is : '|| v_inner);
+    END;
+        dbms_output.put_line('Inner Variable is : '|| v_inner); # Error, in this line
+
+o/p- Error
+
+Example4:
+begin <<outer>>
+DECLARE
+  --v_outer VARCHAR2(50) := 'Outer Variable!';
+  v_text  VARCHAR2(20) := 'Out-text';
+BEGIN 
+  DECLARE
+    v_text  VARCHAR2(20) := 'In-text';
+    v_inner VARCHAR2(30) := 'Inner Variable';
+  BEGIN
+    --dbms_output.put_line('inside -> ' || v_outer);
+    --dbms_output.put_line('inside -> ' || v_inner);
+      dbms_output.put_line('inner -> ' || v_text);
+      dbms_output.put_line('outer -> ' || outer.v_text);
+  END;
+  --dbms_output.put_line('inside -> ' || v_inner);
+  --dbms_output.put_line(v_outer);
+  dbms_output.put_line(v_text);
+END;
+END outer;
+
+o/p - 
+inner -> In-text
+outer -> Out-text
+Out-text
+---------------------------------------------
+Using Bind Variables......
+A bind variable/host variable can be declared in the host environment and passed as runtime value into PL/SQL code blocks. The bind variable will just be like a variable in a code block which has not been declared in the block using it. 
+Conditions:
+1. Bind Variables can be created using the command VARIABLE just like you declare a variable in PL/SQL code.
+2. We can use bind variable in our whole worksheet. Not in others
+3. We reach this variable by writing a colon ':' before its name.
+
+Example1:
+SET SERVEROUTPUT ON;
+variable var_text varchar2(30);
+BEGIN
+    :var_text := 'Hello PL/SQL';
+END;
+
+o/p - PL/SQL procedure successfully completed.
+
+Example2:
+SET SERVEROUTPUT ON;
+variable var_text varchar2(30);
+
+DECLARE
+    v_text varchar2(30);
+BEGIN
+    :var_text := 'Hello PL/SQL';
+    v_text := :var_text;
+    DBMS_OUTPUT.PUT_LINE(v_text);
+END;
+
+o/p - Hello PL/SQL
+
+Example3:
+SET SERVEROUTPUT ON;
+variable var_text varchar2(30);
+
+DECLARE
+    v_text varchar2(30);
+BEGIN
+    :var_text := 'Hello PL/SQL';
+    v_text := :var_text;
+    DBMS_OUTPUT.PUT_LINE(v_text);
+    DBMS_OUTPUT.PUT_LINE(:var_text); # by this way we can print bind variable inside a block.
+END;
+
+o/p - Hello PL/SQL
+      Hello PL/SQL
+
+Example4: (But bind variable are block-free variables. So we print it by other method)
+SET SERVEROUTPUT ON;
+variable var_text varchar2(30);
+
+DECLARE
+    v_text varchar2(30);
+BEGIN
+    :var_text := 'Hello PL/SQL';
+    v_text := :var_text;
+    DBMS_OUTPUT.PUT_LINE(v_text);
+    DBMS_OUTPUT.PUT_LINE(:var_text); # by this way we can print bind variable inside a block.
+END;
+
+o/p - Hello PL/SQL
+      Hello PL/SQL
+
+Example5:
+SET SERVEROUTPUT ON;
+variable var_text varchar2(30);
+
+DECLARE
+    v_text varchar2(30);
+BEGIN
+    :var_text := 'Hello PL/SQL';
+    v_text := :var_text;
+    DBMS_OUTPUT.PUT_LINE(v_text);
+    DBMS_OUTPUT.PUT_LINE(:var_text);
+END;
+/
+PRINT var_text;
+
+o/p - 
+Hello PL/SQL
+Hello PL/SQL
+
+
+PL/SQL procedure successfully completed.
+
+
+VAR_TEXT
+--------------------------------
+Hello PL/SQL

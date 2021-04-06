@@ -1,0 +1,104 @@
+What is PL/SQL?
+PL/SQL stands for Procedural Language Extension to SQL.
+
+PL/SQL Blocks
+  >DECLARE(Optional)
+  >BEGIN(Optional)
+  >EXCEPTION(Optional)
+  >END;(Optional)
+
+Three types of blocks
+  >AnonymousBlocks
+  >Procedures
+  >Functions
+---------------------------------------------------
+Let's start coding
+PL/SQL outputs
+  > Not an output language.
+  > SET SERVEROUTPUT ON;
+  > DBMS_OUTPUT.PUT_LINE(output_text);
+
+Example 1:
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello World');
+END;
+
+>>>No output
+
+Example 2:
+SET SERVEROUTPUT ON;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello World');
+END;
+
+>>>Hello World
+
+Example 3:
+SET SERVEROUTPUT ON;
+DECLARE
+    Messsage VARCHAR2(20) := 'Hello World';
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(Messsage);
+END;
+
+>>>Hello World
+
+Example 4:
+SET SERVEROUTPUT ON;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hello World');
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('Hello Rakesh');
+    END;
+END;
+
+>>>Hello World
+   Hello Rakesh
+
+Example 5:
+SET SERVEROUTPUT ON;
+DECLARE
+    Messsage VARCHAR2(20) := 'Hello World';
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(Messsage);
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('Hello Rakesh');
+    END;
+END;
+
+>>>Hello World
+   Hello Rakesh
+---------------------------------------------------
++, -, *, /	Addition, subtraction/negation, multiplication, division
+%		Attribute indicator
+'XYZ'		Character string delimiter
+.		Component selector
+(,)		Expression or list delimiter
+:		Host variable indicator
+,		Item separator
+"		Quoted identifier delimiter
+=		Relational operator
+@		Remote access indicator
+;		Statement terminator
+:=		Assignment operator
+=>		Association operator
+||		Concatenation operator
+**		Exponentiation operator
+<<, >>		Label delimiter (begin and end)
+/*, */		Multi-line comment delimiter (begin and end)
+--		Single-line comment indicator
+..		Range operator
+<, >, <=, >=	Relational operators
+<>, '=, ~=, ^=	Different versions of NOT EQUAL
+---------------------------------------------------
+PL/SQL Program Units
+A PL/SQL unit is any one of the following −
+
+ - PL/SQL block
+ - Function
+ - Package
+ - Package body
+ - Procedure
+ - Trigger
+ - Type
+ - Type body

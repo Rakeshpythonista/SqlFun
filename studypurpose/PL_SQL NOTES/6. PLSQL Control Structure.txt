@@ -1,0 +1,265 @@
+For more details:
+https://www.tutorialspoint.com/plsql/plsql_conditional_control.htm
+https://www.tutorialspoint.com/plsql/plsql_loops.htm
+
+CONDITION STATEMENTS:
+	- IF Statements
+	- CASE Statements
+
+LOOP STATEMENTS:
+	- WHILE Loop
+	- FOR Loop
+------------------------------------------------------------------------
+IF Statements....
+
+1. IF - THEN statement
+   syntax:
+	IF condition THEN statements;
+	END IF;
+Example1:
+DECLARE 
+    a number(2) := 10;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('value of a is ' || a);
+    IF (a > 20) THEN
+        DBMS_OUTPUT.PUT_LINE('a is less than 20');
+    END IF;
+END;
+
+O/P - value of a is 10
+
+Example2:
+DECLARE 
+    a number(2) := 10;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('value of a is ' || a);
+    IF (a < 20) THEN
+        DBMS_OUTPUT.PUT_LINE('a is less than 20');
+    END IF;
+END;
+
+O/P - value of a is 10
+      a is less than 20
+
+2. IF-THEN-ELSE statement
+   syntax:
+	IF condition THEN statements;
+	[ELSE statements;]
+	END IF;
+Example:
+DECLARE 
+   a number(3) := 100; 
+BEGIN 
+    dbms_output.put_line('value of a is : ' || a); 
+   -- check the boolean condition using if statement  
+   IF( a < 20 ) THEN 
+      -- if condition is true then print the following   
+      dbms_output.put_line('a is less than 20 ' ); 
+   ELSE 
+      dbms_output.put_line('a is not less than 20 ' ); 
+   END IF; 
+END; 
+
+o/p - 
+value of a is : 100
+a is not less than 20 
+
+3. IF-THEN-ELSIF-ELSE statement
+   syntax:
+	IF condition THEN statements;
+	[ELSIF condition THEN statements;]
+	[ELSIF condition THEN statements;]
+	[ELSE statements;]
+	END IF;
+
+Example:
+DECLARE 
+   a number(3) := 100; 
+BEGIN 
+   dbms_output.put_line('Exact value of a is: '|| a );
+   IF ( a = 10 ) THEN 
+      dbms_output.put_line('Value of a is 10' ); 
+   ELSIF ( a = 20 ) THEN 
+      dbms_output.put_line('Value of a is 20' ); 
+   ELSIF ( a = 30 ) THEN 
+      dbms_output.put_line('Value of a is 30' ); 
+   ELSE 
+       dbms_output.put_line('None of the values is matching'); 
+   END IF;   
+END; 
+
+o/p - 
+Exact value of a is: 100
+None of the values is matching
+
+4. NESTEDIF-THEN-ELSIF-ELSE statement
+   syntax:
+	IF condition THEN statements;
+	[ELSIF condition THEN statements;]
+	[ELSIF condition THEN statements;]
+	[ELSE statements;]
+	END IF;
+
+Example 1:
+DECLARE 
+   a number(3) := null; 
+BEGIN 
+   dbms_output.put_line('Exact value of a is: '|| a );
+   IF ( a = 10 ) THEN 
+      dbms_output.put_line('Value of a is 10' ); 
+   ELSIF ( a = 20 ) THEN 
+      dbms_output.put_line('Value of a is 20' ); 
+   ELSIF ( a = 30 ) THEN 
+      dbms_output.put_line('Value of a is 30' ); 
+   ELSE 
+       IF a IS NULL THEN
+            dbms_output.put_line('The number is null...');
+       END IF;
+   END IF;   
+END; 
+
+O/P - 
+Exact value of a is: 
+The number is null...
+
+
+Example 2:
+DECLARE 
+   a number(3) := 100; 
+   b number(3) := 200; 
+BEGIN 
+   dbms_output.put_line('Exact value of a is : ' || a ); 
+   dbms_output.put_line('Exact value of b is : ' || b );
+   -- check the boolean condition  
+   IF( a = 100 ) THEN 
+   -- if condition is true then check the following  
+      IF( b = 200 ) THEN 
+      -- if condition is true then print the following  
+      dbms_output.put_line('Value of a is 100 and b is 200' ); 
+      END IF; 
+   END IF;  
+END;
+
+O/P - 
+Exact value of a is : 100
+Exact value of b is : 200
+Value of a is 100 and b is 200
+
+Example 3:
+declare
+v_number number := 5;
+v_name varchar2(30) := 'Adam';
+begin
+  if v_number < 10 AND v_name = 'Carol' then
+    dbms_output.put_line('HI Carol');
+    dbms_output.put_line('I am smaller than 10');
+  elsif v_number < 10 AND v_name = 'Adam' then
+    dbms_output.put_line('HI Adam');
+  else
+    if v_number is null then 
+      dbms_output.put_line('The number is null..');
+    else
+      dbms_output.put_line('I am equal or greater than 10');
+    end if;
+  end if;
+end;
+
+o/p - HI Adam
+------------------------------------------------------------
+CASE Statements.There are two types of case operations:
+ - Case statements(similar to if-else statement)
+ - Case expressions(different from if-else statement)
+syntax:
+CASE [expression || condition]
+	WHEN condition1 THEN result1
+	WHEN condition2 THEN result2
+	......................
+	......................
+	[WHEN conditionN THEN resultN]
+	[ELSE                 result]
+END;
+
+Example1: example of Case statements
+DECLARE
+ grade char(1) := 'B';
+BEGIN
+    CASE grade
+        WHEN 'A' THEN dbms_output.put_line('Excellent');
+        WHEN 'B' THEN dbms_output.put_line('Very Good');
+        WHEN 'C' THEN dbms_output.put_line('Well Done');
+        WHEN 'D' THEN dbms_output.put_line('You passed');
+        WHEN 'E' THEN dbms_output.put_line('Better Try again');
+        ELSE
+            dbms_output.put_line('No such grade');
+    END CASE;
+END;
+
+o/p - Very Good
+
+Example1.1: example of Case statements
+declare
+  v_job_code varchar2(10) := 'IT_PROG';
+  v_department varchar2(10) := 'IT';
+  v_salary_increase number;
+begin
+  case  
+    when v_job_code = 'SA_MAN' then 
+      v_salary_increase := 0.2;
+      dbms_output.put_line('The salary increase for a Sales Manager is : '|| v_salary_increase);
+    when v_department = 'IT' and v_job_code = 'IT_PROG' then 
+      v_salary_increase := 0.2;
+      dbms_output.put_line('The salary increase for a Sales Manager is : '|| v_salary_increase);
+    else 
+      v_salary_increase := 0;
+      dbms_output.put_line('The salary increase for this job code is : '|| v_salary_increase);
+  end CASE;
+end;
+
+o/p - The salary increase for a Sales Manager is : .2
+
+Example2: example of Case expression
+DECLARE
+    v_job_code VARCHAR2(10) := 'SA_MAN';
+    v_salary_increase number;
+BEGIN
+    v_salary_increase := CASE v_job_code
+        WHEN 'SA_MAN' THEN 0.2
+        WHEN 'SA_REP' THEN 0.3
+        ELSE 0
+    END;
+    dbms_output.put_line('Your salary increase is ' || v_salary_increase);
+END;
+
+o/p - Your salary increase is .2
+
+Example3: example of Case expression
+DECLARE
+    v_job_code VARCHAR2(10) := 'IT_PROG';
+    v_salary_increase number;
+BEGIN
+    v_salary_increase := CASE 
+        WHEN v_job_code = 'SA_MAN' THEN 0.2
+        WHEN v_job_code IN ('SA_MAN','IT_PROG') THEN 0.3
+        ELSE 0
+    END;
+    dbms_output.put_line('Your salary increase is ' || v_salary_increase);
+END;
+
+
+o/p - Your salary increase is .3
+
+Example4: example of Case expression
+DECLARE
+    v_job_code VARCHAR2(10) := 'IT_PROG';
+    v_salary_increase number;
+    v_department varchar2(10) := 'IT';
+BEGIN
+    v_salary_increase := CASE 
+        WHEN v_job_code = 'SA_MAN' THEN 0.2
+        WHEN v_department = 'IT' AND v_job_code = 'IT_PROG' THEN 0.3
+        ELSE 0
+    END;
+    dbms_output.put_line('Your salary increase is ' || v_salary_increase);
+END;
+
+o/p - Your salary increase is .3

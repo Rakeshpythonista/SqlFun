@@ -1,0 +1,171 @@
+Variable Naming Rules
+- Must start with a letter.
+- Can contain some special characters(like_#$)
+- Can be maximum 30 characters.
+- Can not have Oracle's reserved words (select, varchar2,etc)
+
+Naming Conventions
+- VARIABLE : V_variablename - v_max_salary
+- CURSOR : cur_variablename - cur_employees
+- EXCEPTION : e_variablename - e_invalid_salary
+- PROCEDURE : p_variablename - p_calculate_salary
+- BIND VARIABLE : b_Variablename - b_emp_id
+----------------------------------------------------
+The syntax for declaring a variable is −
+variable_name [CONSTANT] datatype [NOT NULL] [:= | DEFAULT initial_value] 
+----------------------------------------------------
+Initializing Variables in PL/SQL
+Whenever you declare a variable, PL/SQL assigns it a default value of NULL. 
+If you want to initialize a variable with a value other than the NULL value,
+you can do so during the declaration, using either of the following −
+ - The DEFAULT keyword
+ - The assignment operator
+
+For example −
+Example 1:
+SET SERVEROUTPUT ON;
+DECLARE
+    V_TEXT VARCHAR2(50) NOT NULL DEFAULT 'Hello';
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(V_TEXT);
+END;
+
+O/P - Hello
+      PL/SQL procedure successfully completed.
+
+Example 2:
+SET SERVEROUTPUT ON;
+DECLARE
+    V_TEXT VARCHAR2(50) NOT NULL DEFAULT 'Hello';
+BEGIN
+    V_TEXT := 'PL/SQL' || ' COURSE';
+    DBMS_OUTPUT.PUT_LINE(V_TEXT);
+END;
+
+O/P - PL/SQL
+      PL/SQL procedure successfully completed.
+
+Example 3:
+SET SERVEROUTPUT ON;
+DECLARE
+    V_TEXT VARCHAR2(50) NOT NULL DEFAULT 'Hello';
+BEGIN
+    V_TEXT := 'PL/SQL' || ' COURSE';
+    DBMS_OUTPUT.PUT_LINE(V_TEXT);
+END;
+
+O/P - PL/SQL COURSE
+      PL/SQL procedure successfully completed.
+
+Example 4:
+SET SERVEROUTPUT ON;
+DECLARE
+    V_TEXT VARCHAR2(50) NOT NULL DEFAULT 'Hello';
+BEGIN
+    V_TEXT := 'PL/SQL' || ' COURSE';
+    DBMS_OUTPUT.PUT_LINE(V_TEXT || ' EASY TO LEARN');
+END;
+
+O/P - PL/SQL COURSE EASY TO LEARN
+      PL/SQL procedure successfully completed.
+
+Example 5:
+SET SERVEROUTPUT ON;
+DECLARE 
+   a integer := 10; 
+   b integer := 20; 
+   c integer; 
+   f real; 
+BEGIN 
+   c := a + b; 
+   dbms_output.put_line('Value of c: ' || c); 
+   f := 70.0/3.0; 
+   dbms_output.put_line('Value of f: ' || f); 
+END;
+
+O/P - Value of c: 30
+      Value of f: 23.33333333333333333333333333333333333333
+      PL/SQL procedure successfully completed.
+
+Example 6:
+SET SERVEROUTPUT ON;
+DECLARE 
+    v_number NUMBER NOT NULL := 50; # OR USE "v_number INT NOT NULL := 50.43;"
+BEGIN 
+   dbms_output.put_line(v_number); 
+END;
+
+O/P - 50
+      PL/SQL procedure successfully completed.
+
+Example 7:
+SET SERVEROUTPUT ON;
+DECLARE 
+    v_number NUMBER NOT NULL := 50.42;
+BEGIN 
+   dbms_output.put_line(v_number); 
+END;
+
+O/P - 50.42
+      PL/SQL procedure successfully completed.
+
+####Precision and scale must be at least equal or higher to your number.
+Example 8:
+SET SERVEROUTPUT ON;
+DECLARE 
+    v_number NUMBER(4,1) NOT NULL := 50.42;
+BEGIN 
+   dbms_output.put_line(v_number); 
+END;
+
+O/P - 50.4
+      PL/SQL procedure successfully completed.
+
+Example 9:
+SET SERVEROUTPUT ON;
+DECLARE 
+    v_number NUMBER(4,2) NOT NULL := 50.42;
+BEGIN 
+   dbms_output.put_line(v_number); 
+END;
+
+O/P - 50.42
+      PL/SQL procedure successfully completed.
+
+Example 10:
+SET SERVEROUTPUT ON;
+DECLARE 
+    v_number PLS_INTEGER NOT NULL := 50.43;     #OR,can also write v_number BINARY_INTEGER NOT NULL := 50.43;
+BEGIN 
+   dbms_output.put_line(v_number); 
+END;
+
+O/P - 50
+      PL/SQL procedure successfully completed.
+
+Example 11:
+SET SERVEROUTPUT ON;
+DECLARE 
+    v_number BINARY_FLOAT NOT NULL := 50.42;  # use v_number FLOAT NOT NULL := 50.43; to get o/p - 50.43
+BEGIN 
+   dbms_output.put_line(v_number); 
+END;
+
+O/P - 5.04300003E+001
+      PL/SQL procedure successfully completed.
+------------------------------------------------
+Using %Type Attribute (Code Samples)
+desc employees;
+declare
+V_TYPE employees.JOB_ID%TYPE;
+V_TYPE2 V_TYPE%TYPE;
+V_TYPE3 employees.JOB_ID%TYPE ;
+begin
+v_type := 'IT_PROG';
+v_type2 := 'SA_MAN';
+v_type3 := NULL;
+dbms_output.put_line(v_type);
+dbms_output.put_line(v_type2);
+dbms_output.put_line('HELLO' || v_type3);
+end;
+------------------------------------------------

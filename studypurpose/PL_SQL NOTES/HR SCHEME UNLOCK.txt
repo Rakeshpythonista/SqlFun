@@ -1,0 +1,71 @@
+Open cmd in administrator mode, Then follow these steps
+Microsoft Windows [Version 10.0.19042.867]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>sqlplus / as sysdba
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Sat Mar 13 12:53:15 2021
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> ALTER USER hr IDENTIFIED BY hr ACCOUNT unlock;
+ALTER USER hr IDENTIFIED BY hr ACCOUNT unlock
+           *
+ERROR at line 1:
+ORA-01918: user 'HR' does not exist
+
+
+SQL>  select name,con_id from v$pdbs;
+
+NAME
+--------------------------------------------------------------------------------
+    CON_ID
+----------
+PDB$SEED
+         2
+
+ORCLPDB
+         3
+
+
+SQL> SELECT NAME as "service name" from v$active_services
+  2  where con_id = 3;
+
+service name
+----------------------------------------------------------------
+orclpdb
+
+SQL> show con_name;
+
+CON_NAME
+------------------------------
+CDB$ROOT
+SQL> ALTER SESSION SET CONTAINER = orclpdb;
+
+Session altered.
+
+SQL> select name, open_mode from v$pdbs;
+
+NAME
+--------------------------------------------------------------------------------
+OPEN_MODE
+----------
+ORCLPDB
+MOUNTED
+
+
+SQL> alter pluggable database open;
+
+Pluggable database altered.
+
+SQL> alter user hr identified by hr account unlock;
+
+User altered.
+
+SQL>
